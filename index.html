@@ -6,10 +6,10 @@
 <title>Pastificio Mancini — Compte Rendu</title>
 <style>
 
-@font-face { font-family:'Corpo';    src:url("fonts/ABCHANELCORPO-REGULAR.OTF") format('opentype');         font-weight:400; }
-@font-face { font-family:'Corpo';    src:url("fonts/ABCHANELCORPO-SEMIBOLD.OTF") format('opentype');        font-weight:600; }
-@font-face { font-family:'Corpo2022';src:url("fonts/ABCHANELCORPO2022-EXTRALIGHT.OTF") format('opentype');  font-weight:200; }
-@font-face { font-family:'Corpo2022';src:url("fonts/ABCHANELCORPO2022-REGULAR.OTF") format('opentype');     font-weight:400; }
+@font-face { font-family:'Corpo';     src:url("fonts/ABCHANELCORPO-REGULAR.OTF") format('opentype');        font-weight:400; }
+@font-face { font-family:'Corpo';     src:url("fonts/ABCHANELCORPO-SEMIBOLD.OTF") format('opentype');       font-weight:600; }
+@font-face { font-family:'Corpo2022'; src:url("fonts/ABCHANELCORPO2022-EXTRALIGHT.OTF") format('opentype'); font-weight:200; }
+@font-face { font-family:'Corpo2022'; src:url("fonts/ABCHANELCORPO2022-REGULAR.OTF") format('opentype');    font-weight:400; }
 @font-face { font-family:'ChanelCoco';src:url("fonts/ABCHANELCOCO-REG.OTF") format('opentype');             font-weight:400; }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -120,7 +120,7 @@ body.compact-nav .stage{top:var(--nav-compact);}
    S1 — HOME
 ═══════════════════════════════ */
 #s1{background:var(--black);display:flex;align-items:center;justify-content:center;}
-#s1 .bg{position:absolute;inset:0;background:url("assets_v2/extracted_10.png") center/cover no-repeat;opacity:1;}
+#s1 .bg{position:absolute;inset:0;background:url("assets_v2/extracted_09.png") center/cover no-repeat;opacity:1;}
 #s1 .content{position:absolute;z-index:1;top:28px;left:40px;}
 .s1-quote{font-family:var(--fb);font-weight:200;font-size:8.5px;letter-spacing:.22em;line-height:1.9;color:rgba(255,255,255,.75);text-transform:uppercase;}
 
@@ -154,22 +154,22 @@ body.compact-nav .stage{top:var(--nav-compact);}
 /* ═══════════════════════════════
    S3 — CONTROLLI QUALITÀ
 ═══════════════════════════════ */
-#s3{display:grid;grid-template-columns:42% 58%;}
+#s3{display:grid;grid-template-columns:28% 72%;}
 .s3-left{display:flex;flex-direction:column;border-right:1px solid var(--g200);overflow:hidden;}
 .s3-head{padding:22px 28px 18px;border-bottom:1px solid var(--g200);display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
 .s3-cols{flex:1;display:flex;flex-direction:column;overflow-y:auto;}
-.s3-col{padding:20px 32px;display:flex;flex-direction:column;gap:14px;}
+.s3-col{padding:16px 28px;display:flex;flex-direction:column;gap:12px;}
 .s3-col+.s3-col{border-top:1px solid var(--g200);}
 .col-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--g200);}
-.col-head img{width:30px;height:30px;flex-shrink:0;}
-.col-title{font-family:var(--fh);font-size:15px;letter-spacing:.12em;text-transform:uppercase;}
+.col-head img{width:26px;height:26px;flex-shrink:0;}
+.col-title{font-family:var(--fh);font-size:13px;letter-spacing:.12em;text-transform:uppercase;}
 .col-item{display:flex;gap:10px;align-items:flex-start;}
 .col-bar{width:1px;background:var(--g400);align-self:stretch;margin-top:5px;flex-shrink:0;}
-.col-item span{font-family:var(--fb);font-weight:200;font-size:16px;line-height:1.65;letter-spacing:.02em;}
+.col-item span{font-family:var(--fb);font-weight:200;font-size:14px;line-height:1.65;letter-spacing:.02em;}
 .s3-right{display:flex;flex-direction:column;overflow:hidden;}
-.s3-right img{width:100%;object-fit:contain;object-position:center center;display:block;background:#fff;}
-.s3-right img:first-child{flex:0 0 62%;border-bottom:1px solid var(--g200);}
-.s3-right img:last-child{flex:0 0 38%;object-fit:cover;}
+.s3-right img{width:100%;object-fit:cover;object-position:center top;display:block;}
+.s3-right img:first-child{flex:0 0 68%;border-bottom:1px solid var(--g200);}
+.s3-right img:last-child{flex:0 0 32%;}
 
 #s3 .s3-left{opacity:0;transform:translateX(-16px);}
 #s3 .s3-right{opacity:0;}
@@ -415,26 +415,26 @@ body.compact-nav .stage{top:var(--nav-compact);}
     <div class="s3-cols">
       <div class="s3-col">
         <div class="col-head">
-          <img src="assets_v2/s3_icon_02.svg" alt="">
-          <span class="col-title">Sicurezza Alimentare</span>
-        </div>
-        <div class="col-item"><div class="col-bar"></div><span>Test Laboratori esterni</span></div>
-        <div class="col-item"><div class="col-bar"></div><span>Analisi dei rischi sulla qualità della materia prima</span></div>
-      </div>
-      <div class="s3-col">
-        <div class="col-head">
-          <img src="assets_v2/s3_icon_01.svg" alt="">
+          <img src="assets_v2/extracted_01.svg" alt="">
           <span class="col-title">Controlli Produzione</span>
         </div>
         <div class="col-item"><div class="col-bar"></div><span>Check-list pre operativa</span></div>
         <div class="col-item"><div class="col-bar"></div><span>Controlli continuativi su ogni lotto di produzione</span></div>
         <div class="col-item"><div class="col-bar"></div><span>Operatore + macchinario</span></div>
       </div>
+      <div class="s3-col">
+        <div class="col-head">
+          <img src="assets_v2/extracted_01.svg" alt="">
+          <span class="col-title">Sicurezza Alimentare</span>
+        </div>
+        <div class="col-item"><div class="col-bar"></div><span>Test Laboratori esterni</span></div>
+        <div class="col-item"><div class="col-bar"></div><span>Analisi dei rischi sulla qualità della materia prima</span></div>
+      </div>
     </div>
   </div>
   <div class="s3-right">
-    <img src="assets_v2/immage_modificata_opt.jpg" alt="Controlli qualità — scheda prove">
-    <img src="assets_v2/img_07.jpg" alt="Metro da sartoria">
+    <img src="assets_v2/extracted_02.jpg" alt="Controlli qualità — scheda prove">
+    <img src="assets_v2/extracted_02.jpg" alt="Metro da sartoria">
   </div>
 </section>
 
@@ -686,22 +686,22 @@ body.compact-nav .stage{top:var(--nav-compact);}
     <div class="tl-track">
       <div class="tl-line"></div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Trebbiatura del grano</span></div><div class="tl-popup-cap">Trebbiatura del grano</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_coltivazione_grano.jpg" alt="Trebbiatura del grano"><div class="tl-popup-cap">Trebbiatura del grano</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Trebbiatura<br>grano</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Molitura</span></div><div class="tl-popup-cap">Molitura</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_molitura.jpg" alt="Molitura"><div class="tl-popup-cap">Molitura</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Molitura</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/extracted_04.png" alt="Trafila in bronzo"><div class="tl-popup-cap">Trafila in bronzo</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/extracted_03.png" alt="Trafila in bronzo"><div class="tl-popup-cap">Trafila in bronzo</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Trafilatura<br>bronzo</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Confezionamento</span></div><div class="tl-popup-cap">Confezionamento</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_confezionamento.jpg" alt="Confezionamento"><div class="tl-popup-cap">Confezionamento</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Confezionamento</span>
       </div>
@@ -714,22 +714,22 @@ body.compact-nav .stage{top:var(--nav-compact);}
     <div class="tl-track">
       <div class="tl-line"></div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Allevamento / coltivazione fibra</span></div><div class="tl-popup-cap">Allevamento fibra</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_allevamento.jpg" alt="Allevamento fibra"><div class="tl-popup-cap">Allevamento fibra</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Allevamento<br>fibra</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Fasi di filatura</span></div><div class="tl-popup-cap">Fasi di filatura</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_fasi_filatura.jpg" alt="Fasi di filatura"><div class="tl-popup-cap">Fasi di filatura</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Fasi di<br>filatura</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Controlli qualità superati</span></div><div class="tl-popup-cap">Controlli qualità</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_controllo_qualita.jpg" alt="Controlli qualità"><div class="tl-popup-cap">Controlli qualità</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Controlli<br>qualità</span>
       </div>
       <div class="tl-node">
-        <div class="tl-popup"><div class="tl-popup-ph"><span>Creazione del capo</span></div><div class="tl-popup-cap">Creazione del capo</div></div>
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/popup_creazione_capo.jpg" alt="Creazione del capo"><div class="tl-popup-cap">Creazione del capo</div></div>
         <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
         <span class="tl-lbl">Creazione<br>del capo</span>
       </div>
