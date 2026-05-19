@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastificio Mancini — Compte Rendu</title>
+<style>
+
+@font-face { font-family:'Corpo';    src:url("fonts/ABCHANELCORPO-REGULAR.OTF") format('opentype');         font-weight:400; }
+@font-face { font-family:'Corpo';    src:url("fonts/ABCHANELCORPO-SEMIBOLD.OTF") format('opentype');        font-weight:600; }
+@font-face { font-family:'Corpo2022';src:url("fonts/ABCHANELCORPO2022-EXTRALIGHT.OTF") format('opentype');  font-weight:200; }
+@font-face { font-family:'Corpo2022';src:url("fonts/ABCHANELCORPO2022-REGULAR.OTF") format('opentype');     font-weight:400; }
+@font-face { font-family:'ChanelCoco';src:url("fonts/ABCHANELCOCO-REG.OTF") format('opentype');             font-weight:400; }
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --black:#000;--white:#fff;
+  --g100:#f8f8f6;--g200:#e8e8e6;--g400:#b8b8b6;--g600:#787876;
+  --nav-full:68px; --nav-compact:44px;
+  --fh:'Corpo',Georgia,serif;
+  --fb:'Corpo2022',Arial,sans-serif;
+  --fc:'ChanelCoco',serif;
+  --ease:cubic-bezier(0.76,0,0.24,1);
+}
+
+html,body{width:100%;height:100%;overflow:hidden;background:var(--white);color:var(--black);}
+
+/* ═══════════ NAV ═══════════ */
+.site-nav{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--nav-full);
+  background:var(--white);
+  border-bottom:1px solid var(--black);
+  z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  transition:height .35s var(--ease);
+  overflow:visible;
+}
+.site-nav.compact{height:var(--nav-compact);}
+
+.nav-brand{
+  font-family:var(--fc);
+  font-size:16px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--black);cursor:pointer;user-select:none;
+  transition:font-size .3s ease;
+}
+.site-nav.compact .nav-brand{font-size:14px;}
+
+.nav-links{
+  display:flex;align-items:center;
+  transition:opacity .25s ease,transform .25s ease;
+  transform-origin:top center;
+}
+.site-nav.compact .nav-links{
+  opacity:0;pointer-events:none;transform:translateY(-6px);
+}
+
+.nav-links a{
+  font-family:var(--fb);font-weight:200;font-size:7.5px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--g600);text-decoration:none;cursor:pointer;
+  padding:3px 14px;border-bottom:1px solid transparent;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--black);}
+.nav-links a.active{color:var(--black);border-bottom-color:var(--black);}
+
+/* dropdown on hover when compact */
+.nav-dropdown{
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--white);border-bottom:1px solid var(--black);
+  display:flex;justify-content:center;gap:0;
+  padding:10px 48px;
+  opacity:0;pointer-events:none;
+  transform:translateY(-4px);
+  transition:opacity .25s ease,transform .25s ease;
+}
+.site-nav.compact:hover .nav-dropdown{
+  opacity:1;pointer-events:all;transform:translateY(0);
+}
+.nav-dropdown a{
+  font-family:var(--fb);font-weight:200;font-size:7.5px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--g600);text-decoration:none;cursor:pointer;
+  padding:4px 14px;border-bottom:1px solid transparent;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.nav-dropdown a:hover{color:var(--black);}
+.nav-dropdown a.active{color:var(--black);border-bottom-color:var(--black);}
+
+/* ═══════════ STAGE ═══════════ */
+.stage{
+  position:fixed;
+  top:var(--nav-full);left:0;right:0;bottom:0;
+  transition:top .35s var(--ease);
+}
+body.compact-nav .stage{top:var(--nav-compact);}
+
+/* ═══════════ SLIDES ═══════════ */
+.slide{
+  position:absolute;inset:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .55s var(--ease);
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;}
+.slide.scrollable{overflow-y:auto;}
+
+/* ═══════════ SHARED ═══════════ */
+.eyebrow{font-family:var(--fb);font-weight:200;font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--g600);}
+.slide-title{font-family:var(--fh);font-size:31px;letter-spacing:0.07em;text-transform:uppercase;line-height:1.05;}
+
+@keyframes riseIn   {from{opacity:0;transform:translateY(10px)}  to{opacity:1;transform:none}}
+@keyframes fadeIn   {from{opacity:0}                              to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-14px)} to{opacity:1;transform:none}}
+@keyframes slideLeft {from{opacity:0;transform:translateX(14px)}  to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════
+   S1 — HOME
+═══════════════════════════════ */
+#s1{background:var(--black);display:flex;align-items:center;justify-content:center;}
+#s1 .bg{position:absolute;inset:0;background:url("assets_v2/extracted_10.png") center/cover no-repeat;opacity:1;}
+#s1 .content{position:absolute;z-index:1;top:28px;left:40px;}
+.s1-quote{font-family:var(--fb);font-weight:200;font-size:8.5px;letter-spacing:.22em;line-height:1.9;color:rgba(255,255,255,.75);text-transform:uppercase;}
+
+#s1 .s1-quote{opacity:0;}
+#s1.active .s1-quote{animation:fadeIn .9s var(--ease) .5s both;}
+
+/* ═══════════════════════════════
+   S2 — FILOSOFIA
+═══════════════════════════════ */
+#s2{display:grid;grid-template-columns:1fr 1fr;}
+.s2-left{padding:44px 48px 32px;display:flex;flex-direction:column;justify-content:center;gap:24px;border-right:1px solid var(--g200);overflow:hidden;}
+.s2-grain{display:flex;align-items:center;gap:10px;padding-top:20px;border-top:1px solid var(--g200);}
+.s2-grain img{width:28px;height:28px;flex-shrink:0;}
+.s2-grain span{font-family:var(--fb);font-weight:200;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g600);}
+.s2-right{overflow:hidden;}
+.s2-right img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.s2-intro{font-family:var(--fb);font-weight:200;font-size:14px;line-height:1.8;color:var(--g600);padding-left:14px;border-left:1px solid var(--g400);}
+.s2-points{display:flex;flex-direction:column;gap:16px;}
+.s2-point{display:flex;gap:13px;align-items:flex-start;}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--black);margin-top:10px;flex-shrink:0;}
+.s2-point span{font-family:var(--fb);font-weight:200;font-size:15px;line-height:1.65;letter-spacing:.02em;}
+
+#s2 .s2-left>*{opacity:0;transform:translateX(-14px);}
+#s2 .s2-right{opacity:0;}
+#s2.active .s2-left>*:nth-child(1){animation:slideRight .7s var(--ease) .05s both;}
+#s2.active .s2-left>*:nth-child(2){animation:slideRight .7s var(--ease) .15s both;}
+#s2.active .s2-left>*:nth-child(3){animation:slideRight .7s var(--ease) .25s both;}
+#s2.active .s2-left>*:nth-child(4){animation:slideRight .7s var(--ease) .38s both;}
+#s2.active .s2-right{animation:fadeIn .9s var(--ease) .2s both;}
+
+/* ═══════════════════════════════
+   S3 — CONTROLLI QUALITÀ
+═══════════════════════════════ */
+#s3{display:grid;grid-template-columns:42% 58%;}
+.s3-left{display:flex;flex-direction:column;border-right:1px solid var(--g200);overflow:hidden;}
+.s3-head{padding:22px 28px 18px;border-bottom:1px solid var(--g200);display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
+.s3-cols{flex:1;display:flex;flex-direction:column;overflow-y:auto;}
+.s3-col{padding:20px 32px;display:flex;flex-direction:column;gap:14px;}
+.s3-col+.s3-col{border-top:1px solid var(--g200);}
+.col-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--g200);}
+.col-head img{width:30px;height:30px;flex-shrink:0;}
+.col-title{font-family:var(--fh);font-size:15px;letter-spacing:.12em;text-transform:uppercase;}
+.col-item{display:flex;gap:10px;align-items:flex-start;}
+.col-bar{width:1px;background:var(--g400);align-self:stretch;margin-top:5px;flex-shrink:0;}
+.col-item span{font-family:var(--fb);font-weight:200;font-size:16px;line-height:1.65;letter-spacing:.02em;}
+.s3-right{display:flex;flex-direction:column;overflow:hidden;}
+.s3-right img{width:100%;object-fit:cover;object-position:center top;display:block;}
+.s3-right img:first-child{flex:0 0 68%;border-bottom:1px solid var(--g200);}
+.s3-right img:last-child{flex:0 0 32%;}
+
+#s3 .s3-left{opacity:0;transform:translateX(-16px);}
+#s3 .s3-right{opacity:0;}
+#s3.active .s3-left {animation:slideRight .7s var(--ease) .1s both;}
+#s3.active .s3-right{animation:fadeIn .9s var(--ease) .2s both;}
+
+/* ═══════════════════════════════
+   S4 — NON CONFORMITÀ
+═══════════════════════════════ */
+#s4{display:flex;flex-direction:column;padding:28px 56px 24px;gap:14px;}
+.s4-head{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
+
+/* two equal schemas side by side */
+.s4-body{flex:1;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--g200);min-height:0;}
+.s4-schema{display:flex;flex-direction:column;padding:20px 28px;gap:12px;overflow:hidden;}
+.s4-schema+.s4-schema{border-left:1px solid var(--g200);}
+.s4-schema-head{display:flex;align-items:center;justify-content:center;gap:13px;padding-bottom:14px;border-bottom:1px solid var(--g200);flex-shrink:0;}
+.s4-schema-icon{width:32px;height:32px;flex-shrink:0;}
+.s4-schema-title{font-family:var(--fh);font-size:17px;letter-spacing:.12em;text-transform:uppercase;}
+.s4-schema-pts{display:flex;flex-direction:column;gap:9px;flex-shrink:0;align-items:center;text-align:center;}
+.s4-schema-pt{display:flex;gap:10px;align-items:flex-start;justify-content:center;}
+.s4-schema-bar{width:1px;background:var(--g400);align-self:stretch;margin-top:6px;flex-shrink:0;}
+.s4-schema-pt span{font-family:var(--fb);font-weight:200;font-size:14px;line-height:1.6;letter-spacing:.02em;}
+
+/* 5 Perché flowchart in left schema */
+.s4-flow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:0;margin-top:4px;}
+.s4-flow-step{display:flex;align-items:center;gap:10px;padding:5px 0;}
+.s4-flow-num{width:20px;height:20px;border-radius:50%;border:1px solid var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.s4-flow-num span{font-family:var(--fh);font-size:8px;letter-spacing:.04em;}
+.s4-flow-text{font-family:var(--fb);font-weight:200;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--g600);}
+.s4-flow-arrow{width:1px;height:12px;background:var(--g400);margin-left:9px;flex-shrink:0;}
+.s4-flow-result{display:flex;align-items:center;gap:10px;padding:5px 0;margin-top:4px;}
+.s4-flow-result-box{border:1px solid var(--black);padding:5px 10px;}
+.s4-flow-result-box span{font-family:var(--fh);font-size:9px;letter-spacing:.1em;text-transform:uppercase;}
+
+/* fishbone in right schema */
+.s4-fishbone-wrap{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;overflow:hidden;}
+.fb-label{font-family:var(--fb);font-weight:200;font-size:7px;letter-spacing:.28em;text-transform:uppercase;color:var(--g600);flex-shrink:0;}
+#fishbone{flex:1;width:100%;min-height:0;overflow:visible;}
+
+/* SVG text halos */
+#fishbone text{paint-order:stroke fill;stroke:white;stroke-width:7px;stroke-linejoin:round;}
+.fb-spine{stroke:#000;stroke-width:1.8;fill:none;}
+.fb-bone {stroke:#000;stroke-width:1.3;fill:none;}
+.fb-sub  {stroke:#b8b8b6;stroke-width:1;fill:none;}
+.fb-cat  {font-family:'Corpo',serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;fill:#000;}
+.fb-cause{font-family:'Corpo2022',sans-serif;font-size:7.5px;fill:#555;}
+.fb-prob {font-family:'Corpo',serif;font-size:7px;letter-spacing:.06em;text-transform:uppercase;fill:#fff;text-anchor:middle;}
+
+/* convergence strip */
+.s4-conv{flex-shrink:0;display:flex;align-items:center;gap:0;border:1px solid var(--g200);border-top:0;padding:13px 28px;}
+.s4-conv-line{flex:1;height:1px;background:var(--g200);}
+.s4-conv-box{padding:0 20px;text-align:center;}
+.s4-conv-title{font-family:var(--fh);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;}
+.s4-conv-sub{font-family:var(--fb);font-weight:200;font-size:7px;letter-spacing:.24em;text-transform:uppercase;color:var(--g600);}
+
+#s4 .s4-head{opacity:0;transform:translateY(-8px);}
+#s4 .s4-schema:first-child{opacity:0;transform:translateX(-14px);}
+#s4 .s4-schema:last-child{opacity:0;}
+#s4 .s4-conv{opacity:0;}
+#s4.active .s4-head             {animation:riseIn    .6s var(--ease) .05s both;}
+#s4.active .s4-schema:first-child{animation:slideRight .7s var(--ease) .2s  both;}
+#s4.active .s4-schema:last-child {animation:fadeIn     .6s var(--ease) .32s both;}
+#s4.active .s4-conv              {animation:riseIn     .6s var(--ease) .5s  both;}
+
+/* ═══════════════════════════════
+   S5 — COSA CI ACCOMUNA
+═══════════════════════════════ */
+#s5{display:flex;flex-direction:column;padding:28px 64px 28px;gap:16px;overflow-y:auto;}
+.s5-head{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
+.ct{flex:1;display:flex;flex-direction:column;min-height:0;}
+.ct-head{display:grid;grid-template-columns:28px 1fr 1fr;border-bottom:1.5px solid var(--black);padding-bottom:10px;}
+.ct-head-col{font-family:var(--fh);font-size:13px;letter-spacing:.16em;text-transform:uppercase;}
+.ct-head-col:last-child{padding-left:20px;}
+.ct-row{display:grid;grid-template-columns:36px 1fr 1fr;border-bottom:1px solid var(--g100);padding:20px 0;align-items:start;}
+.ct-num{font-family:var(--fh);font-size:12px;color:var(--g400);letter-spacing:.12em;padding-top:3px;}
+.ct-cell{font-family:var(--fb);font-weight:200;font-size:15px;line-height:1.7;letter-spacing:.02em;padding-right:20px;}
+.ct-cell:last-child{padding-left:20px;padding-right:0;border-left:1px solid var(--g200);}
+.ct-icons{display:grid;grid-template-columns:28px 1fr 1fr;padding-top:24px;border-top:1px solid var(--g200);margin-top:4px;}
+.ct-icons-cell{display:flex;align-items:center;gap:10px;}
+.ct-icons-cell:last-child{padding-left:20px;}
+.ct-icons-cell img{width:32px;height:32px;flex-shrink:0;}
+.ct-icons-cell span{font-family:var(--fb);font-weight:200;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--g600);}
+
+#s5 .s5-head{opacity:0;transform:translateY(-8px);}
+#s5 .ct-row{opacity:0;transform:translateY(7px);}
+#s5.active .s5-head            {animation:riseIn .6s var(--ease) .05s both;}
+#s5.active .ct-row:nth-child(1){animation:riseIn .5s var(--ease) .2s  both;}
+#s5.active .ct-row:nth-child(2){animation:riseIn .5s var(--ease) .34s both;}
+#s5.active .ct-row:nth-child(3){animation:riseIn .5s var(--ease) .48s both;}
+#s5.active .ct-row:nth-child(4){animation:riseIn .5s var(--ease) .62s both;}
+#s5.active .ct-row:nth-child(5){animation:riseIn .5s var(--ease) .76s both;}
+
+/* ═══════════════════════════════
+   S6 — IMPLEMENTAZIONE
+═══════════════════════════════ */
+#s6{display:flex;flex-direction:column;padding:28px 56px 28px;gap:16px;}
+.s6-head{display:flex;flex-direction:column;gap:5px;flex-shrink:0;}
+.s6-sub{font-family:var(--fb);font-weight:200;font-size:7.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--g600);margin-top:2px;}
+.steps{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.step{display:grid;grid-template-columns:46px 34px 1fr;gap:18px;align-items:center;padding:18px 0;border-bottom:1px solid var(--g100);}
+.step:first-child{border-top:1px solid var(--g100);}
+.step-num{font-family:var(--fh);font-size:24px;letter-spacing:.04em;color:var(--g400);line-height:1;}
+.step-icon{width:30px;height:30px;display:block;}
+.step-body{display:flex;flex-direction:column;gap:4px;}
+.step-title{font-family:var(--fh);font-size:16px;letter-spacing:.1em;text-transform:uppercase;}
+.step-desc{font-family:var(--fb);font-weight:200;font-size:14px;line-height:1.6;letter-spacing:.02em;color:var(--g600);}
+
+#s6 .s6-head{opacity:0;transform:translateY(-8px);}
+#s6 .step{opacity:0;transform:translateX(-14px);}
+#s6.active .s6-head          {animation:riseIn    .6s var(--ease) .05s both;}
+#s6.active .step:nth-child(1){animation:slideRight .6s var(--ease) .15s both;}
+#s6.active .step:nth-child(2){animation:slideRight .6s var(--ease) .28s both;}
+#s6.active .step:nth-child(3){animation:slideRight .6s var(--ease) .41s both;}
+#s6.active .step:nth-child(4){animation:slideRight .6s var(--ease) .54s both;}
+
+/* ═══════════════════════════════
+   S7 — TRACCIABILITÀ
+═══════════════════════════════ */
+#s7{display:flex;flex-direction:column;padding:28px 56px 36px;gap:0;overflow-y:auto;}
+.s7-head{display:flex;flex-direction:column;gap:6px;flex-shrink:0;margin-bottom:32px;}
+.s7-qr{font-family:var(--fb);font-weight:200;font-size:13px;letter-spacing:.12em;color:var(--g600);margin-top:2px;}
+
+.tl-section{flex-shrink:0;margin-bottom:0;}
+.tl-section+.tl-section{border-top:1px solid var(--g200);margin-top:36px;padding-top:36px;}
+.tl-name{font-family:var(--fh);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--g600);margin-bottom:28px;}
+
+/* track */
+.tl-track{position:relative;display:flex;align-items:flex-start;}
+.tl-line{position:absolute;top:26px;left:26px;right:26px;height:1px;background:var(--g200);z-index:0;overflow:hidden;}
+.tl-line::after{content:'';position:absolute;inset:0;background:var(--black);transform-origin:left;transform:scaleX(0);transition:transform 1.2s var(--ease);}
+.slide.active .tl-line::after{transform:scaleX(1);}
+
+/* nodes */
+.tl-node{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;}
+.tl-circle{width:52px;height:52px;border-radius:50%;border:1px solid var(--black);background:var(--white);display:flex;align-items:center;justify-content:center;transition:background .2s;position:relative;z-index:2;}
+.tl-circle img{width:26px;height:26px;transition:filter .2s;}
+.tl-node:hover .tl-circle{background:var(--black);}
+.tl-node:hover .tl-circle img{filter:invert(1);}
+.tl-lbl{font-family:var(--fb);font-weight:200;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-align:center;color:var(--g600);line-height:1.55;max-width:110px;}
+
+/* popup */
+.tl-popup{
+  position:absolute;bottom:calc(100% + 14px);left:50%;
+  transform:translateX(-50%) translateY(6px);
+  width:190px;background:var(--white);border:1px solid var(--black);
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  z-index:50;
+}
+.tl-node:hover .tl-popup{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all;}
+.tl-node:first-child .tl-popup{left:0;right:auto;transform:translateX(0) translateY(6px);}
+.tl-node:first-child:hover .tl-popup{transform:translateX(0) translateY(0);}
+.tl-node:last-child .tl-popup{left:auto;right:0;transform:translateX(0) translateY(6px);}
+.tl-node:last-child:hover .tl-popup{transform:translateX(0) translateY(0);}
+
+.tl-popup-img{width:100%;height:180px;object-fit:contain;background:var(--g100);display:block;}
+.tl-popup-ph{width:100%;height:160px;background:var(--g100);display:flex;align-items:center;justify-content:center;}
+.tl-popup-ph span{font-family:var(--fb);font-weight:200;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:var(--g400);text-align:center;padding:0 12px;}
+.tl-popup-cap{padding:8px 10px;font-family:var(--fb);font-weight:200;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--g600);border-top:1px solid var(--g100);}
+
+/* node animations — .tl-line è nth-child(1) quindi i nodi sono nth-child(2..5) */
+.tl-node{opacity:0;transform:translateY(8px);}
+/* mancini — 4 nodi */
+#s7.active .tl-section:nth-child(2) .tl-node:nth-child(2){animation:riseIn .45s var(--ease) .3s  both;}
+#s7.active .tl-section:nth-child(2) .tl-node:nth-child(3){animation:riseIn .45s var(--ease) .48s both;}
+#s7.active .tl-section:nth-child(2) .tl-node:nth-child(4){animation:riseIn .45s var(--ease) .66s both;}
+#s7.active .tl-section:nth-child(2) .tl-node:nth-child(5){animation:riseIn .45s var(--ease) .84s both;}
+/* chanel — 4 nodi */
+#s7.active .tl-section:nth-child(3) .tl-node:nth-child(2){animation:riseIn .45s var(--ease) .8s  both;}
+#s7.active .tl-section:nth-child(3) .tl-node:nth-child(3){animation:riseIn .45s var(--ease) .98s both;}
+#s7.active .tl-section:nth-child(3) .tl-node:nth-child(4){animation:riseIn .45s var(--ease) 1.16s both;}
+#s7.active .tl-section:nth-child(3) .tl-node:nth-child(5){animation:riseIn .45s var(--ease) 1.34s both;}
+
+#s7 .s7-head{opacity:0;transform:translateY(-8px);}
+#s7.active .s7-head{animation:riseIn .6s var(--ease) .05s both;}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="site-nav" id="mainNav">
+  <span class="nav-brand" id="navBrand">CHANEL</span>
+  <div class="nav-links" id="navLinks">
+    <a data-target="2" class="nav-item">La sua Filosofia</a>
+    <a data-target="3" class="nav-item">Controlli Qualità</a>
+    <a data-target="4" class="nav-item">Non Conformità</a>
+    <a data-target="5" class="nav-item">Cosa ci Accomuna</a>
+    <a data-target="6" class="nav-item">Implementazione Interna</a>
+    <a data-target="7" class="nav-item">Tracciabilità</a>
+  </div>
+  <!-- dropdown (compact mode) -->
+  <div class="nav-dropdown" id="navDropdown">
+    <a data-target="2" class="nav-item">La sua Filosofia</a>
+    <a data-target="3" class="nav-item">Controlli Qualità</a>
+    <a data-target="4" class="nav-item">Non Conformità</a>
+    <a data-target="5" class="nav-item">Cosa ci Accomuna</a>
+    <a data-target="6" class="nav-item">Implementazione Interna</a>
+    <a data-target="7" class="nav-item">Tracciabilità</a>
+  </div>
+</nav>
+
+<!-- ═══ STAGE ═══ -->
+<main class="stage" id="stage">
+
+<!-- ── S1: HOME ── -->
+<section class="slide active" id="s1" data-n="1">
+  <div class="bg"></div>
+  <div class="content">
+    <p class="s1-quote">Ispirarsi a un&rsquo;eccellenza artigianale<br>per elevare i nostri standard di qualità.</p>
+  </div>
+</section>
+
+<!-- ── S2: FILOSOFIA ── -->
+<section class="slide" id="s2" data-n="2">
+  <div class="s2-left">
+    <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+    <h2 class="slide-title">La sua<br>Filosofia</h2>
+    <p class="s2-intro">Nasce nel 2010 nelle Marche per iniziativa di <strong>Massimo Mancini</strong></p>
+    <div class="s2-points">
+      <div class="s2-point"><div class="dot"></div><span><strong>Filiera verticale</strong>, dalla semola alla pasta.</span></div>
+      <div class="s2-point"><div class="dot"></div><span>Ogni formato segue <strong>50 parametri</strong> produttivi, che si adattano in base alla qualità della raccolta.</span></div>
+      <div class="s2-point"><div class="dot"></div><span><strong>Materia prima variabile</strong> &mdash; grano diverso ogni stagione.</span></div>
+      <div class="s2-point"><div class="dot"></div><span>Conoscenze empiriche e scientifiche tradotte in parametri oggettivi scritti in un <strong>Manuale Qualità</strong>.</span></div>
+    </div>
+    <div class="s2-grain">
+      <img src="assets_v2/extracted_01.svg" alt="">
+      <span>Filiera del grano &mdash; dal campo alla pasta</span>
+    </div>
+  </div>
+  <div class="s2-right"><img src="assets_v2/extracted_02.jpg" alt="Pastificio Mancini — Marche"></div>
+</section>
+
+
+<!-- ── S3: CONTROLLI QUALITÀ ── -->
+<section class="slide" id="s3" data-n="3">
+  <div class="s3-left">
+    <div class="s3-head">
+      <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+      <h2 class="slide-title">Controlli Qualità</h2>
+    </div>
+    <div class="s3-cols">
+      <div class="s3-col">
+        <div class="col-head">
+          <img src="assets_v2/extracted_01.svg" alt="">
+          <span class="col-title">Controlli Produzione</span>
+        </div>
+        <div class="col-item"><div class="col-bar"></div><span>Check-list pre operativa</span></div>
+        <div class="col-item"><div class="col-bar"></div><span>Controlli continuativi su ogni lotto di produzione</span></div>
+        <div class="col-item"><div class="col-bar"></div><span>Operatore + macchinario</span></div>
+      </div>
+      <div class="s3-col">
+        <div class="col-head">
+          <img src="assets_v2/extracted_01.svg" alt="">
+          <span class="col-title">Sicurezza Alimentare</span>
+        </div>
+        <div class="col-item"><div class="col-bar"></div><span>Test Laboratori esterni</span></div>
+        <div class="col-item"><div class="col-bar"></div><span>Analisi dei rischi sulla qualità della materia prima</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="s3-right">
+    <img src="assets_v2/extracted_03.jpg" alt="Controlli qualità — scheda prove">
+    <img src="assets_v2/extracted_02.jpg" alt="Metro da sartoria">
+  </div>
+</section>
+
+<!-- ── S4: NON CONFORMITÀ ── -->
+<section class="slide" id="s4" data-n="4">
+  <div class="s4-head">
+    <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+    <h2 class="slide-title">Non Conformità</h2>
+  </div>
+
+  <div class="s4-body">
+    <!-- LEFT: 5 Perché -->
+    <div class="s4-schema">
+      <div class="s4-schema-head">
+        <img class="s4-schema-icon" src="assets_v2/extracted_01.svg" alt="">
+        <span class="s4-schema-title">5 Perché</span>
+      </div>
+      <div class="s4-schema-pts">
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Risposta con dati scientifici</span></div>
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Bassa complessità</span></div>
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Causa singola e identificabile</span></div>
+      </div>
+      <!-- 5 Perché flowchart schema -->
+      <div class="s4-flow">
+        <div class="s4-flow-step">
+          <div class="s4-flow-num"><span>1</span></div>
+          <span class="s4-flow-text">Perché?</span>
+        </div>
+        <div class="s4-flow-arrow"></div>
+        <div class="s4-flow-step">
+          <div class="s4-flow-num"><span>2</span></div>
+          <span class="s4-flow-text">Perché?</span>
+        </div>
+        <div class="s4-flow-arrow"></div>
+        <div class="s4-flow-step">
+          <div class="s4-flow-num"><span>3</span></div>
+          <span class="s4-flow-text">Perché?</span>
+        </div>
+        <div class="s4-flow-arrow"></div>
+        <div class="s4-flow-step">
+          <div class="s4-flow-num"><span>4</span></div>
+          <span class="s4-flow-text">Perché?</span>
+        </div>
+        <div class="s4-flow-arrow"></div>
+        <div class="s4-flow-step">
+          <div class="s4-flow-num"><span>5</span></div>
+          <span class="s4-flow-text">Perché?</span>
+        </div>
+        <div class="s4-flow-arrow"></div>
+        <div class="s4-flow-result">
+          <div class="s4-flow-result-box"><span>Causa radice</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Ishikawa + fishbone -->
+    <div class="s4-schema">
+      <div class="s4-schema-head">
+        <img class="s4-schema-icon" src="assets_v2/extracted_01.svg" alt="">
+        <span class="s4-schema-title">Ishikawa</span>
+      </div>
+      <div class="s4-schema-pts">
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Elevata complessità</span></div>
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Problemi multifattoriali</span></div>
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Panorama delle possibili cause</span></div>
+        <div class="s4-schema-pt"><div class="s4-schema-bar"></div><span>Investigazione approfondita</span></div>
+      </div>
+      <div class="s4-fishbone-wrap">
+        <span class="fb-label">Esempio &mdash; Filato che stinge</span>
+        <svg id="fishbone" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+          <!-- Spine -->
+          <line class="fb-spine" x1="15" y1="140" x2="502" y2="140"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <!-- Arrowhead -->
+          <polygon id="fb-arrow" points="502,135 518,140 502,145" fill="#000" opacity="0"/>
+
+          <!-- Problem box -->
+          <rect id="fb-box" x="519" y="115" width="38" height="50" fill="#000" opacity="0"/>
+          <text class="fb-prob" x="538" y="130" opacity="0">FILATO</text>
+          <text class="fb-prob" x="538" y="143" opacity="0">CHE</text>
+          <text class="fb-prob" x="538" y="156" opacity="0">STINGE</text>
+
+          <!-- ── BONE 1: MATERIA PRIMA ── -->
+          <line class="fb-bone" x1="52"  y1="48"  x2="175" y2="140"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="99"  y1="83"  x2="27"  y2="83"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="133" y1="109" x2="61"  y2="109"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <text class="fb-cat"   x="10"  y="44" text-anchor="start" opacity="0">Materia prima</text>
+          <text class="fb-cause" x="63"  y="78" text-anchor="middle" opacity="0">Scarsa qualità</text>
+          <text class="fb-cause" x="97"  y="104" text-anchor="middle" opacity="0">Impurità naturali</text>
+
+          <!-- ── BONE 2: TINTURA ── -->
+          <line class="fb-bone" x1="232" y1="48"  x2="355" y2="140"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="279" y1="83"  x2="207" y2="83"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="313" y1="109" x2="241" y2="109"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <text class="fb-cat"   x="190" y="44" text-anchor="start" opacity="0">Tintura</text>
+          <text class="fb-cause" x="243" y="78" text-anchor="middle" opacity="0">Procedura errata</text>
+          <text class="fb-cause" x="277" y="104" text-anchor="middle" opacity="0">Colorante non adatto</text>
+
+          <!-- ── BONE 3: CONTROLLO QUALITÀ ── -->
+          <line class="fb-bone" x1="52"  y1="232" x2="175" y2="140"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="99"  y1="197" x2="27"  y2="197"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="133" y1="171" x2="61"  y2="171"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <text class="fb-cat"   x="10"  y="250" text-anchor="start" opacity="0">Controllo qualità</text>
+          <text class="fb-cause" x="63"  y="211" text-anchor="middle" opacity="0">Test solidità n.e.</text>
+          <text class="fb-cause" x="97"  y="185" text-anchor="middle" opacity="0">Tolleranza elevata</text>
+
+          <!-- ── BONE 4: CURA DEL CAPO ── -->
+          <line class="fb-bone" x1="232" y1="232" x2="355" y2="140"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="279" y1="197" x2="207" y2="197"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <line class="fb-sub"  x1="313" y1="171" x2="241" y2="171"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <text class="fb-cat"   x="190" y="250" text-anchor="start" opacity="0">Cura del capo</text>
+          <text class="fb-cause" x="243" y="211" text-anchor="middle" opacity="0">Lavaggio errato</text>
+          <text class="fb-cause" x="277" y="185" text-anchor="middle" opacity="0">Prodotti inadatti</text>
+
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Convergence: both schemas → Nuovo Standard Aziendale -->
+  <div class="s4-conv">
+    <div class="s4-conv-line"></div>
+    <div class="s4-conv-box">
+      <strong class="s4-conv-title">Nuovo Standard Aziendale</strong>
+      <span class="s4-conv-sub">Root Cause Analysis</span>
+    </div>
+    <div class="s4-conv-line"></div>
+  </div>
+</section>
+
+<!-- ── S5: COSA CI ACCOMUNA ── -->
+<section class="slide" id="s5" data-n="5">
+  <div class="s5-head">
+    <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+    <h2 class="slide-title">Cosa ci Accomuna</h2>
+  </div>
+  <div class="ct">
+    <div class="ct-head">
+      <span class="ct-head-col"></span>
+      <span class="ct-head-col">Pastificio Mancini</span>
+      <span class="ct-head-col">Chanel</span>
+    </div>
+    <div class="ct-row">
+      <span class="ct-num">01</span>
+      <div class="ct-cell">Materia prima <strong>biologica e variabile</strong> &mdash; grano diverso ogni stagione</div>
+      <div class="ct-cell">Materia prima <strong>variabile</strong> &mdash; fibra, filati, tessuti diversi ogni collezione</div>
+    </div>
+    <div class="ct-row">
+      <span class="ct-num">02</span>
+      <div class="ct-cell"><strong>Savoir-faire</strong> del mastro pastaio tradotto in procedure</div>
+      <div class="ct-cell"><strong>Know-how</strong> dei maglifici e dei tecnici Chanel formalizzato in procedure condivise</div>
+    </div>
+    <div class="ct-row">
+      <span class="ct-num">03</span>
+      <div class="ct-cell">"Ricetta" di <strong>50 parametri</strong> per ogni formato, adattata alla qualità del grano</div>
+      <div class="ct-cell">Dettagli tecnici per modello &mdash; TDM, test LABO, TAP, PRSL, nomenclature</div>
+    </div>
+    <div class="ct-row">
+      <span class="ct-num">04</span>
+      <div class="ct-cell">Analisi dei rischi + <strong>Root Cause Analysis</strong> strutturate e documentate</div>
+      <div class="ct-cell">Analisi dei rischi con i fabbricanti + verifica standard (composizioni, TDS, test REACH)</div>
+    </div>
+    <div class="ct-row">
+      <span class="ct-num">05</span>
+      <div class="ct-cell"><strong>Checklist e processi pre-operativi</strong> prima di ogni produzione</div>
+      <div class="ct-cell">Procedure e standard condivisi &mdash; Test LABO, test REACH&hellip;</div>
+    </div>
+    <div class="ct-icons">
+      <div></div>
+      <div class="ct-icons-cell">
+        <img src="assets_v2/extracted_01.svg" alt="">
+        <span>Filiera del grano</span>
+      </div>
+      <div class="ct-icons-cell">
+        <img src="assets_v2/extracted_01.svg" alt="">
+        <span>Creazione del capo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S6: IMPLEMENTAZIONE ── -->
+<section class="slide" id="s6" data-n="6">
+  <div class="s6-head">
+    <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+    <h2 class="slide-title">Implementazione Interna</h2>
+    <span class="s6-sub">Prossimi step</span>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <img class="step-icon" src="assets_v2/extracted_01.svg" alt="">
+      <div class="step-body">
+        <span class="step-title">Manuale Qualità / Cahier de charge Qualité</span>
+        <span class="step-desc">Procedure di controllo durante il processo produttivo — dalla materia prima al capo finito — e i parametri da rispettare.</span>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <img class="step-icon" src="assets_v2/extracted_01.svg" alt="">
+      <div class="step-body">
+        <span class="step-title">Golden Rules</span>
+        <span class="step-desc">Definire e condividere le regole qualitative non negoziabili con i partner produttivi.</span>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <img class="step-icon" src="assets_v2/extracted_01.svg" alt="">
+      <div class="step-body">
+        <span class="step-title">Root Cause Analysis</span>
+        <span class="step-desc">Strutturare un template interno per le non conformità, ispirato alla Root Cause Analysis di Mancini.</span>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <img class="step-icon" src="assets_v2/extracted_01.svg" alt="">
+      <div class="step-body">
+        <span class="step-title">Processi Pre-operativi</span>
+        <span class="step-desc">Introdurre checklist operative standardizzate prima di ogni sessione di valutazione del prodotto, come processo sistematico del team.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S7: TRACCIABILITÀ ── -->
+<section class="slide scrollable" id="s7" data-n="7">
+  <div class="s7-head">
+    <span class="eyebrow">Compte Rendu &mdash; Pastificio Mancini</span>
+    <h2 class="slide-title">Tracciabilità</h2>
+    <span class="s7-qr">QR code su ogni pacco &mdash; Tracciabilità lotto &middot; Materie usate &middot; Scadenza</span>
+  </div>
+
+  <!-- Mancini -->
+  <div class="tl-section">
+    <div class="tl-name">Mancini &mdash; Filiera produttiva</div>
+    <div class="tl-track">
+      <div class="tl-line"></div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Trebbiatura del grano</span></div><div class="tl-popup-cap">Trebbiatura del grano</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Trebbiatura<br>grano</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Molitura</span></div><div class="tl-popup-cap">Molitura</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Molitura</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><img class="tl-popup-img" src="assets_v2/extracted_04.png" alt="Trafila in bronzo"><div class="tl-popup-cap">Trafila in bronzo</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Trafilatura<br>bronzo</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Confezionamento</span></div><div class="tl-popup-cap">Confezionamento</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Confezionamento</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chanel -->
+  <div class="tl-section">
+    <div class="tl-name">Chanel &mdash; Processo produttivo</div>
+    <div class="tl-track">
+      <div class="tl-line"></div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Allevamento / coltivazione fibra</span></div><div class="tl-popup-cap">Allevamento fibra</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Allevamento<br>fibra</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Fasi di filatura</span></div><div class="tl-popup-cap">Fasi di filatura</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Fasi di<br>filatura</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Controlli qualità superati</span></div><div class="tl-popup-cap">Controlli qualità</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Controlli<br>qualità</span>
+      </div>
+      <div class="tl-node">
+        <div class="tl-popup"><div class="tl-popup-ph"><span>Creazione del capo</span></div><div class="tl-popup-cap">Creazione del capo</div></div>
+        <div class="tl-circle"><img src="assets_v2/extracted_01.svg" alt=""></div>
+        <span class="tl-lbl">Creazione<br>del capo</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main><!-- /stage -->
+
+<script>
+(function(){
+  const nav      = document.getElementById('mainNav');
+  const brand    = document.getElementById('navBrand');
+  const stage    = document.getElementById('stage');
+  const allNavItems = document.querySelectorAll('.nav-item');
+  let current = 1;
+
+  function goTo(n){
+    if(n === current && document.getElementById('s'+n).classList.contains('active')) return;
+
+    document.getElementById('s'+current).classList.remove('active');
+    current = n;
+
+    const next = document.getElementById('s'+n);
+    next.classList.remove('active');
+    void next.offsetWidth; // restart animations
+    next.classList.add('active');
+
+    // nav state
+    if(n === 1){
+      nav.classList.remove('compact');
+      stage.style.top = '';
+      document.body.classList.remove('compact-nav');
+    } else {
+      nav.classList.add('compact');
+      document.body.classList.add('compact-nav');
+    }
+
+    // active link highlight
+    allNavItems.forEach(a=>{
+      a.classList.toggle('active', parseInt(a.dataset.target)===n);
+    });
+
+    // fishbone trigger
+    if(n===4) setTimeout(animateFishbone, 400);
+  }
+
+  brand.addEventListener('click', ()=>goTo(1));
+  allNavItems.forEach(a=>a.addEventListener('click',()=>goTo(parseInt(a.dataset.target))));
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'){ if(current<7) goTo(current+1); }
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ if(current>1) goTo(current-1); }
+  });
+
+  /* ── fishbone draw-in ── */
+  function animateFishbone(){
+    const svg = document.getElementById('fishbone');
+    if(!svg) return;
+    const lines = svg.querySelectorAll('line[pathLength]');
+    lines.forEach((el,i)=>{
+      el.style.transition='none';
+      el.style.strokeDashoffset='1';
+      setTimeout(()=>{
+        el.style.transition='stroke-dashoffset .5s cubic-bezier(.76,0,.24,1)';
+        el.style.strokeDashoffset='0';
+      }, 30 + i*85);
+    });
+    const fades = svg.querySelectorAll('[opacity="0"]');
+    fades.forEach((el,i)=>{
+      el.style.transition='none';
+      el.style.opacity='0';
+      setTimeout(()=>{
+        el.style.transition='opacity .35s ease';
+        el.style.opacity='1';
+      }, 200 + i*60);
+    });
+  }
+
+  // init
+  goTo(1);
+
+  /* ── Responsive scaling: adatta tutto allo schermo ── */
+  const REF_W = 1440, REF_H = 810;
+  function fitScreen(){
+    const s = Math.min(window.innerWidth / REF_W, window.innerHeight / REF_H);
+    // zoom funziona in Chrome/Edge/Safari e scala anche gli elementi fixed
+    if('zoom' in document.body.style){
+      document.body.style.zoom = s;
+    } else {
+      // Firefox fallback: scale sul wrapper
+      document.body.style.transform = `scale(${s})`;
+      document.body.style.transformOrigin = 'top left';
+      document.body.style.width  = REF_W + 'px';
+      document.body.style.height = REF_H + 'px';
+    }
+  }
+  window.addEventListener('resize', fitScreen);
+  fitScreen();
+})();
+</script>
+</body>
+</html>
