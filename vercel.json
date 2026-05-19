@@ -1,7 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/PRESENTAZIONE PASTIFICIO VERSIONE 3.HTML" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
